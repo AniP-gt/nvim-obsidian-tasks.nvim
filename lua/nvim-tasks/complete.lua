@@ -33,10 +33,10 @@ local function can_operate()
     vim.notify("nvim-tasks: Markdown 以外では実行しません", vim.log.levels.INFO)
     return false
   end
-  if not vault.in_vault() then
-    vim.notify("nvim-tasks: .obsidian が見つからないため無効です", vim.log.levels.INFO)
-    return false
-  end
+  -- if not vault.in_vault() then
+  --   vim.notify("nvim-tasks: .obsidian が見つからないため無効です", vim.log.levels.INFO)
+  --   return false
+  -- end
   return true
 end
 
