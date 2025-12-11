@@ -30,7 +30,7 @@ end
 
 local function can_operate()
 	if not is_markdown() then
-		vim.notify("nvim-tasks: Markdown 以外では実行しません", vim.log.levels.INFO)
+		vim.notify("nvim-tasks: Only available in Markdown files", vim.log.levels.INFO)
 		return false
 	end
 	return true
@@ -62,11 +62,11 @@ function M.complete_current_line()
 	local row = vim.api.nvim_win_get_cursor(0)[1] - 1
 	local line = vim.api.nvim_buf_get_lines(bufnr, row, row + 1, false)[1]
 	if is_done_task(line) then
-		vim.notify("nvim-tasks: 既に完了済みです", vim.log.levels.INFO)
+		vim.notify("nvim-tasks: Task already completed", vim.log.levels.INFO)
 		return
 	end
 	if not is_open_task(line) then
-		vim.notify("nvim-tasks: 対象タスクがありません", vim.log.levels.INFO)
+		vim.notify("nvim-tasks: No task found on this line", vim.log.levels.INFO)
 		return
 	end
 	apply_lines(bufnr, row, row + 1)
@@ -95,7 +95,7 @@ function M.complete_visual_selection()
 	end
 
 	if not any then
-		vim.notify("nvim-tasks: 変換対象のタスクがありません", vim.log.levels.INFO)
+		vim.notify("nvim-tasks: No convertible tasks found", vim.log.levels.INFO)
 		return
 	end
 
