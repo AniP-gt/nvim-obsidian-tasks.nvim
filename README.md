@@ -3,9 +3,9 @@
 A tiny Neovim plugin that mirrors Obsidian Tasks completion formatting. It converts open tasks to completed form with a date stamp, but only inside directories that contain a `.obsidian` folder. Markdown buffers only; normal and visual mode support.
 
 ## Features
-- Convert `- [ ] task` to `- [x] YYYY-MM-DD task` with a completion marker.
+- Convert `- [ ] task` to `- [x] YYYY-MM-DD task` with a completion marker that reuses Obsidian Tasks’ emoji conventions.
 - Respects existing text (tags, emoji, punctuation) after the checkbox.
-- Provides `:TasksComplete` so the completion logic can run from the command line with optional ranges.
+- Provides commands to stamp date metadata (`:TasksSetDueDate`, `:TasksSetScheduledDate`, `:TasksSetStartDate`, `:TasksSetCreatedDate`, `:TasksSetDoneDate`, `:TasksSetCancelledDate`) or adjust priorities (`:TasksSetPriority [level]`).
 - Guardrails: no edits outside an Obsidian vault or in non-Markdown buffers; already completed tasks are skipped.
 - Single undo step for each invocation (including multi-line visual changes).
 
@@ -32,6 +32,14 @@ return {
 - Open a Markdown file inside a directory that has `.obsidian` somewhere above it.
 - Run `:TasksComplete` to convert open tasks on the current line or (when you provide a range like `:'<,'>` or `:10,20`) across many lines.
 - Select lines visually and execute `:'<,'>TasksComplete` (or your preferred keymap) to batch-complete tasks, including non-task lines in the selection.
+- Use the new commands to decorate tasks with metadata:
+  - `:TasksSetDueDate [YYYY-MM-DD]`
+  - `:TasksSetScheduledDate [YYYY-MM-DD]`
+  - `:TasksSetStartDate [YYYY-MM-DD]`
+  - `:TasksSetCreatedDate [YYYY-MM-DD]`
+  - `:TasksSetDoneDate [YYYY-MM-DD]`
+  - `:TasksSetCancelledDate [YYYY-MM-DD]`
+  - `:TasksSetPriority [highest|high|medium|normal|low|lowest]`
 - Outside a vault or in non-Markdown buffers, the command is ignored with a notice.
 - If no open tasks are found, nothing is changed and a notice is shown.
 
@@ -60,5 +68,5 @@ You can choose other keys or modes if you prefer.
 - Date uses local system time.
 
 ## Development
-- Core files: `lua/nvim-tasks/complete.lua`, `vault.lua`, `init.lua`; entrypoint: `plugin/nvim-tasks.lua`.
+- Core files: `lua/nvim-tasks/complete.lua`, `meta.lua`, `symbols.lua`, `vault.lua`. Command definitions live under `lua/nvim-tasks/commands/` and shared helpers under `lua/nvim-tasks/utils/`.
 - Tests are not provided; manual checks follow the user stories in `specs/001-task-complete-date/spec.md`.
