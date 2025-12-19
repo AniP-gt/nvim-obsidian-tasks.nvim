@@ -1,30 +1,23 @@
+local complete_command = require("nvim-tasks.commands.complete")
+local due_date_command = require("nvim-tasks.commands.due_date")
+local scheduled_date_command = require("nvim-tasks.commands.scheduled_date")
+local start_date_command = require("nvim-tasks.commands.start_date")
+local created_date_command = require("nvim-tasks.commands.created_date")
+local done_date_command = require("nvim-tasks.commands.done_date")
+local cancelled_date_command = require("nvim-tasks.commands.cancelled_date")
+local priority_command = require("nvim-tasks.commands.priority")
+
 local M = {}
 
-local function create_tasks_complete_command()
-  if vim.fn.exists(":TasksComplete") == 2 then
-    return
-  end
-
-  local complete = require("nvim-tasks.complete")
-  vim.api.nvim_create_user_command("TasksComplete", function(opts)
-    if not complete.can_operate() then
-      return
-    end
-
-    local start_line = opts.line1 or vim.api.nvim_win_get_cursor(0)[1]
-    local end_line = opts.line2 or start_line
-    local changed = complete.complete_range(start_line - 1, end_line)
-
-    if not changed then
-      vim.notify("nvim-tasks: No convertible tasks found", vim.log.levels.INFO)
-    end
-  end, {
-    range = true,
-  })
-end
-
 function M.register()
-  create_tasks_complete_command()
+  complete_command.register()
+  due_date_command.register()
+  scheduled_date_command.register()
+  start_date_command.register()
+  created_date_command.register()
+  done_date_command.register()
+  cancelled_date_command.register()
+  priority_command.register()
 end
 
 return M
