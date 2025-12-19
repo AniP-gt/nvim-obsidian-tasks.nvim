@@ -6,7 +6,7 @@ end
 
 function M.setup(opts)
   M.options = vim.tbl_deep_extend("force", default_options(), opts or {})
-  require("nvim-tasks.keymaps").setup()
+  require("nvim-tasks.commands").register()
 end
 
 return M
