@@ -5,7 +5,7 @@ local function create_tasks_complete_command()
     return
   end
 
-  local complete = require("nvim-tasks.complete")
+  local complete = require("nvim-tasks.toggle.complete")
   vim.api.nvim_create_user_command("TasksComplete", function(opts)
     if not complete.can_operate() then
       return

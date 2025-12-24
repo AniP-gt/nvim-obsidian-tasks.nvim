@@ -1,5 +1,7 @@
 local M = {}
 
+local vault = require("nvim-tasks.vault")
+
 local function is_markdown_filetype(ft)
   return ft == "markdown" or ft == "md" or ft == "pandoc"
 end
@@ -13,11 +15,15 @@ function M.can_operate()
     vim.notify("nvim-tasks: Only available in Markdown files", vim.log.levels.INFO)
     return false
   end
+  if not vault.in_vault() then
+    vim.notify("nvim-tasks: Only available inside an Obsidian vault", vim.log.levels.INFO)
+    return false
+  end
   return true
 end
 
 function M.is_open_task(line)
-  return line:match("^%s*%- %[%s%] .+") ~= nil
+  return line:match("^%s*%- %[ %] .+") ~= nil
 end
 
 function M.update_range(bufnr, start_idx, end_idx, transformer)
@@ -39,3 +45,4 @@ function M.update_range(bufnr, start_idx, end_idx, transformer)
 end
 
 return M
+
