@@ -18,6 +18,13 @@ local function ensure_date(value)
   return normalized
 end
 
+local function get_date_value(opts, config)
+  if config and config.date_provider then
+    return config.date_provider(opts)
+  end
+  return ensure_date(opts.args)
+end
+
 local function apply_field(bufnr, start_line, end_line, field, date_value)
   local start_idx = start_line - 1
   local end_idx = end_line
@@ -32,12 +39,17 @@ local function register(command_name, field, config)
     return
   end
 
+  local command_opts = {
+    range = config.range ~= false,
+    nargs = config.nargs or "?",
+  }
+
   vim.api.nvim_create_user_command(command_name, function(opts)
     if not utils.can_operate() then
       return
     end
 
-    local date_value = ensure_date(opts.args)
+    local date_value = get_date_value(opts, config)
     local start_line = opts.line1 or vim.api.nvim_win_get_cursor(0)[1]
     local end_line = opts.line2 or start_line
     local changed = apply_field(vim.api.nvim_get_current_buf(), start_line, end_line, field, date_value)
@@ -45,10 +57,7 @@ local function register(command_name, field, config)
     if not changed then
       vim.notify(config.fail_message or "nvim-tasks: No matching tasks found", vim.log.levels.INFO)
     end
-  end, {
-    range = true,
-    nargs = "?",
-  })
+  end, command_opts)
 end
 
 local M = {}

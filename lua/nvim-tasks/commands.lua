@@ -6,6 +6,8 @@ local start_date_command = require("nvim-tasks.commands.start_date")
 local created_date_command = require("nvim-tasks.commands.created_date")
 local done_date_command = require("nvim-tasks.commands.done_date")
 local cancelled_date_command = require("nvim-tasks.commands.cancelled_date")
+local generate_id_command = require("nvim-tasks.commands.generate_id")
+local on_completion_command = require("nvim-tasks.commands.on_completion")
 local priority_command = require("nvim-tasks.commands.priority")
 
 local M = {}
@@ -19,6 +21,8 @@ function M.register()
   created_date_command.register()
   done_date_command.register()
   cancelled_date_command.register()
+  generate_id_command.register()
+  on_completion_command.register()
   priority_command.register()
 end
 

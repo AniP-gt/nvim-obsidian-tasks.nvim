@@ -15,6 +15,9 @@ local SYMBOLS = {
     done = "✅",
     cancelled = "❌",
   },
+  ids = {
+    task = "🆔",
+  },
   recurrence = "🔁",
   on_completion = "🏁",
 }
