@@ -1,4 +1,5 @@
 local complete_command = require("nvim-tasks.commands.complete")
+local toggle_command = require("nvim-tasks.commands.toggle")
 local due_date_command = require("nvim-tasks.commands.due_date")
 local scheduled_date_command = require("nvim-tasks.commands.scheduled_date")
 local start_date_command = require("nvim-tasks.commands.start_date")
@@ -11,6 +12,7 @@ local M = {}
 
 function M.register()
   complete_command.register()
+  toggle_command.register()
   due_date_command.register()
   scheduled_date_command.register()
   start_date_command.register()

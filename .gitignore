@@ -1,0 +1,14 @@
+.DS_Store
+Thumbs.db
+*.log
+*.tmp
+*.swp
+*.swo
+*.bak
+*.orig
+*.un~
+.vscode/
+.idea/
+.tags
+session.vim
+.nvimlog

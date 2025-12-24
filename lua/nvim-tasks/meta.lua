@@ -35,4 +35,12 @@ function M.set_date_field(line, field, value)
   return append_field(cleaned, symbol, value)
 end
 
+function M.remove_date_field(line, field)
+  local symbol = symbols.dates[field]
+  if not symbol then
+    return line
+  end
+  return remove_existing_field(line, symbol)
+end
+
 return M
